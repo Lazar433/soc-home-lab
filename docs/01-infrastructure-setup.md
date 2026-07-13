@@ -44,5 +44,5 @@ Set up the local virtualization environment for the SOC lab: VirtualBox, an isol
 
 
 
-Isolated local network ready. Victim and attacker VMs will connect to this network in later steps.
+Isolated local network ready. Both the Windows victim and Kali attacker VMs (see docs/03-windows-victim-setup.md and docs/04-kali-attacker-setup.md) are connected to this network, with confirmed bidirectional connectivity.
 
