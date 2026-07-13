@@ -24,11 +24,11 @@ Deploy a Windows 10 VM to serve as the attack target, with dual network adapters
 
 \- Disabled all Windows privacy/telemetry options during setup (diagnostic data, tailored experiences, advertising ID, etc.) to reduce background network noise that could interfere with attack-related log analysis
 
-\- Verified network connectivity via `ipconfig`:
+\- Verified network connectivity via 'ipconfig':
 
-&#x20; - Host-only adapter: `192.168.56.104`
+&#x20; - Host-only adapter: '192.168.56.104'
 
-&#x20; - NAT adapter: `10.0.3.15`
+&#x20; - NAT adapter: '10.0.3.15'
 
 
 
@@ -44,9 +44,23 @@ Deploy a Windows 10 VM to serve as the attack target, with dual network adapters
 
 \- Root cause: Windows Hyper-V was active on the host, competing with VirtualBox for VT-x/AMD-V hardware virtualization access.
 
-\- Fix: disabled Hyper-V on the host with `bcdedit /set hypervisorlaunchtype off` (as Administrator), followed by a host reboot.
+\- Fix: disabled Hyper-V on the host with 'bcdedit /set hypervisorlaunchtype off' (as Administrator), followed by a host reboot.
 
 \- The VM was rebuilt from scratch without the Unattended Install feature (manual installation instead), which also avoided a secondary issue where the auto-generated unattended installation media left the VM without a valid bootable OS.
+
+
+
+\### Sysmon deployment
+
+\- Installed Sysmon 15.21 with the SwiftOnSecurity configuration ('sysmonconfig-export.xml'), the de-facto industry-standard ruleset for balanced, high-signal endpoint logging
+
+\- Verified via 'sc query Sysmon64' — service running ('STATE: 4 RUNNING')
+
+\- Confirmed event generation in Event Viewer under 'Applications and Services Logs > Microsoft > Windows > Sysmon > Operational'
+
+
+
+!\[Sysmon events in Event Viewer](../screenshots/03-windows/02-sysmon-event-viewer.png)
 
 
 
@@ -54,5 +68,5 @@ Deploy a Windows 10 VM to serve as the attack target, with dual network adapters
 
 
 
-Windows 10 Pro VM running with dual network connectivity confirmed (Host-only + NAT). Ready for Sysmon and Wazuh agent installation.
+Windows 10 Pro VM running with dual network connectivity confirmed (Host-only + NAT) and Sysmon actively logging with the SwiftOnSecurity configuration. Ready for Wazuh agent installation.
 
