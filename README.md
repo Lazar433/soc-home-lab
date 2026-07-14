@@ -18,17 +18,10 @@ I'm an L1 IT Support professional (Active Directory account management, hardware
 
 
 
-\- \*\*SIEM:\*\* Wazuh, hosted on a Hetzner Cloud VPS (Ubuntu 22.04)
-
-\- \*\*Victim endpoint:\*\* Windows 10 VM with Sysmon, running locally in VirtualBox
-
-\- \*\*Attacker machine:\*\* Kali Linux VM, running locally in VirtualBox
-
-\- \*\*Networking:\*\* Local Host-Only network between victim and attacker; Wazuh agent communicates with the remote SIEM over the internet (ports 1514/1515)
-
-
-
-\*(Architecture diagram to be added.)\*
+* **SIEM:** Wazuh, hosted on a Hetzner Cloud VPS (Ubuntu 22.04)
+* **Victim endpoint:** Windows 10 VM with Sysmon, running locally in VirtualBox
+* **Attacker machine:** Kali Linux VM, running locally in VirtualBox
+* **Networking:** Local Host-Only network between victim and attacker; Wazuh agent communicates with the remote SIEM over the internet (ports 1514/1515)
 
 
 
@@ -36,17 +29,12 @@ I'm an L1 IT Support professional (Active Directory account management, hardware
 
 
 
-\- Wazuh (SIEM/XDR)
-
-\- Sysmon (endpoint telemetry)
-
-\- VirtualBox (virtualization)
-
-\- Kali Linux (attack simulation - nmap, Hydra, Metasploit)
-
-\- Hetzner Cloud (VPS hosting for SIEM)
-
-\- Git / GitHub (version control and documentation)
+* Wazuh (SIEM/XDR)
+* Sysmon (endpoint telemetry)
+* VirtualBox (virtualization)
+* Kali Linux (attack simulation - nmap, Hydra, Metasploit)
+* Hetzner Cloud (VPS hosting for SIEM)
+* Git / GitHub (version control and documentation)
 
 
 
@@ -78,21 +66,14 @@ All activity in this lab was performed exclusively within an isolated, self-owne
 
 
 
-\- \[Infrastructure Setup](docs/01-infrastructure-setup.md)
-
-\- \[Wazuh VPS Deployment](docs/02-wazuh-vps-deployment.md)
-
-\- \[Windows Victim Setup](docs/03-windows-victim-setup.md)
-
-\- \[Kali Attacker Setup](docs/04-kali-attacker-setup.md)
-
-\- \[Incident 1: Brute-Force Attack](incidents/01-bruteforce-attack.md)
-
-\- \[Incident 2: Unauthorized Account Creation](incidents/02-unauthorized-account-creation.md)
-
-\- \[Incident 3: Encoded PowerShell](incidents/03-encoded-powershell.md)
-
-\- \[Analysis Summary](analysis-summary.md)
+* Infrastructure Setup
+* Wazuh VPS Deployment
+* Windows Victim Setup
+* Kali Attacker Setup
+* Incident 1: Brute-Force Attack
+* Incident 2: Unauthorized Account Creation
+* Incident 3: Encoded PowerShell
+* Analysis Summary
 
 
 
@@ -100,5 +81,5 @@ All activity in this lab was performed exclusively within an isolated, self-owne
 
 
 
-🔧 In progress - this repository is being built and documented live, phase by phase.
+Complete - all planned incidents simulated, detected, and documented.
 

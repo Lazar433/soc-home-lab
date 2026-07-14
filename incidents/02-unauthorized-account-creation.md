@@ -6,15 +6,7 @@
 
 
 
-Following the successful RDP brute-force attack (Incident 01), the compromised 'victim'
-
-account was used to simulate a post-exploitation persistence technique: creating a new
-
-local administrator account. This ensures continued access even if the original
-
-compromised credential is later discovered and changed. Wazuh detected both the account
-
-creation and its addition to the local Administrators group.
+Following the successful RDP brute-force attack (Incident 01), the compromised `victim` account was used to simulate a post-exploitation persistence technique: creating a new local administrator account. This ensures continued access even if the original compromised credential is later discovered and changed. Wazuh detected both the account creation and its addition to the local Administrators group.
 
 
 
@@ -22,7 +14,7 @@ creation and its addition to the local Administrators group.
 
 
 
-\- \*\*Attacker access:\*\* RDP session as 'victim' (credential obtained in Incident 01)
+\- \*\*Attacker access:\*\* RDP session as `victim` (credential obtained in Incident 01)
 
 \- \*\*Target:\*\* Windows victim VM
 
@@ -36,13 +28,13 @@ creation and its addition to the local Administrators group.
 
 
 
-'''cmd
+```cmd
 
 net user hacker P@ssw0rd123! /add
 
 net localgroup administrators hacker /add
 
-'''
+```
 
 
 
@@ -50,11 +42,11 @@ Verification:
 
 
 
-'''cmd
+```cmd
 
 net user hacker
 
-'''
+```
 
 
 
@@ -66,17 +58,13 @@ net user hacker
 
 
 
-Wazuh's default ruleset detected both actions as separate, individually-triggered alerts
-
-(no correlation/aggregation needed, unlike the brute-force pattern in Incident 01 — each
-
-event is sensitive enough on its own to warrant an alert):
+Wazuh's default ruleset detected both actions as separate, individually-triggered alerts (no correlation/aggregation needed, unlike the brute-force pattern in Incident 01 -each event is sensitive enough on its own to warrant an alert):
 
 
 
 | Event | Rule level | Description |
 
-|---|---|---|
+| --- | --- | --- |
 
 | Local account created (Windows Event ID 4720) | 8 | "A user account was created" |
 
@@ -86,15 +74,13 @@ event is sensitive enough on its own to warrant an alert):
 
 Alert detail confirmed the full forensic trail:
 
-\- 'subjectUserName: victim' — the account that performed the action
+\- `subjectUserName: victim` -the account that performed the action
 
-\- 'targetUserName: hacker' — the account that was created/modified
+\- `targetUserName: hacker` -the account that was created/modified
 
 
 
-This subject/target distinction is what allows a SOC analyst to trace the action back to
-
-the specific compromised account responsible, linking this incident directly to Incident 01.
+This subject/target distinction is what allows a SOC analyst to trace the action back to the specific compromised account responsible, linking this incident directly to Incident 01.
 
 
 
@@ -110,23 +96,11 @@ the specific compromised account responsible, linking this incident directly to 
 
 
 
-\- Unlike the brute-force detection (which relied on correlating multiple events over a
+\- Unlike the brute-force detection (which relied on correlating multiple events over a time window), account creation and privilege group changes are sensitive enough to generate an alert from a single event -no pattern-matching required.
 
-&#x20; time window), account creation and privilege group changes are sensitive enough to
+\- Wazuh's subject/target user fields provide direct attribution, connecting this incident to the account compromised in Incident 01 and demonstrating a realistic attack chain: initial access (brute-force) → persistence (rogue admin account).
 
-&#x20; generate an alert from a single event — no pattern-matching required.
-
-\- Wazuh's subject/target user fields provide direct attribution, connecting this incident
-
-&#x20; to the account compromised in Incident 01 and demonstrating a realistic attack chain:
-
-&#x20; initial access (brute-force) → persistence (rogue admin account).
-
-\- In a real environment, a deliberately inconspicuous account name (mimicking a service
-
-&#x20; account) would be used instead of an obviously suspicious name like "hacker" - naming
-
-&#x20; choice is itself a detection evasion consideration worth noting.
+\- In a real environment, a deliberately inconspicuous account name (mimicking a service account) would be used instead of an obviously suspicious name like "hacker" - naming choice is itself a detection evasion consideration worth noting.
 
 
 
@@ -136,7 +110,5 @@ the specific compromised account responsible, linking this incident directly to 
 
 \- \*\*T1136.001 - Create Account: Local Account\*\*
 
-\- \*\*T1078 - Valid Accounts\*\* (the account used to perform the action was itself
-
-&#x20; previously compromised)
+\- \*\*T1078 - Valid Accounts\*\* (the account used to perform the action was itself previously compromised)
 
