@@ -154,10 +154,6 @@ generates a ready-to-use PowerShell installation command.
 
 
 
-!\[Deploy agent wizard](../screenshots/02-wazuh/05-agent-deploy-wizard.png)
-
-
-
 The agent was installed and started on the Windows victim VM:
 
 
