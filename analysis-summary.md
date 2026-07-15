@@ -50,7 +50,7 @@ This document summarizes the three simulated incidents in this SOC lab, compares
 
 
 
-Across the three incidents, the attack chain progressed through a realistic sequence: initial access via credential compromise (01), persistence via a secondary account (02), and post-compromise discovery using an obfuscation technique (03) - all performed using the account chain established in the earlier incidents rather than as isolated, unconnected tests.
+Across the three incidents, the attack chain progressed through a realistic sequence: initial access via credential compromise (01), persistence via a secondary account (02), and post-compromise discovery using an obfuscation technique (03). All three used the same account chain established in the earlier incidents rather than being isolated, unconnected tests.
 
 
 
@@ -72,11 +72,25 @@ Across the three incidents, the attack chain progressed through a realistic sequ
 
 
 
-\- \*\*Validate all relevant event channels immediately after agent enrollment\*\*, rather than assuming default Windows Security log coverage is sufficient. A quick test event (e.g., a single Sysmon-logged process) should be part of the standard deployment checklist going forward.
+\*\*1. Verify every telemetry source right after agent enrollment, not just the agent status.\*\*
 
-\- \*\*Build the custom wordlist and account credentials before infrastructure provisioning\*\*, to reduce paid server uptime during initial trial-and-error (e.g., NLA and account lockout troubleshooting in Incident 01).
+Seeing the agent marked "Active" in the dashboard was not enough proof that everything was working. Standard Windows login events came through fine, but Sysmon data silently did not - this was only discovered while working on the third incident. Next time: send one test event from each expected source immediately after enrollment, before relying on the setup for anything else.
 
-\- \*\*Snapshot the Windows victim VM after Sysmon/agent configuration is confirmed working\*\*, to allow faster recovery from clock desync or agent registration issues encountered after host restarts, instead of manually re-enrolling each time.
+
+
+\*\*2. Prepare all attack materials before the paid server is running.\*\*
+
+The server bills by the hour from the moment it exists. Building the password wordlist happened after the server was already up, and a mistake in that file wasted paid server time while it was being debugged. Next time: finish anything that does not require the live server - wordlists, payloads, test commands - before provisioning it.
+
+
+
+\*\*3. Take a VM snapshot as soon as the setup is confirmed working.\*\*
+
+VirtualBox can save the exact current state of a VM as a snapshot. Once the agent was confirmed working and Sysmon data was flowing, no snapshot was taken. When a later host restart caused a clock desync and broke the agent's registration, the only option was to manually re-enroll it from scratch, which took real time. Next time: snapshot immediately after confirming a working state, so any later issue can be undone in seconds instead of redone by hand.
+
+
+
+These are the kind of details that matter beyond just completing the lab - they show the ability to recognize what went wrong and improve the process for next time, not just execute a checklist.
 
 
 
